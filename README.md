@@ -1,0 +1,1 @@
+Snowflake's Problem Identification Chart: This intertactive html file has 3 personas Data Engineer, Cloud Architect and CIO. The file lists some of the business problems, impacts, root causes along with how snowflake solves these problems
