@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowflake PIC · Built by [Your Name]</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0d0f14;
+  --ink-2: #3a3d47;
+  --ink-3: #72768a;
+  --ink-4: #a8abbe;
+  --bg: #f4f5f8;
+  --surface: #ffffff;
+  --border: #e4e6ee;
+  --border-2: #cdd0e0;
+  --snow: #0a6bff;
+  --snow-dark: #0040c4;
+  --snow-soft: #e8f0ff;
+  --de: #0a6bff;
+  --de-bg: #e8f0ff;
+  --arch: #7c3aed;
+  --arch-bg: #f0ebff;
+  --cio: #0d9e6e;
+  --cio-bg: #e5f7f1;
+  --win: #065f46;
+  --win-bg: #ecfdf5;
+  --win-border: #6ee7b7;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════════════════════════
+   COVER BANNER — The impression-maker
+══════════════════════════════════════════ */
+.cover {
+  background: var(--ink);
+  padding: 64px 56px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle grid texture */
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+/* Glow */
+.cover::after {
+  content: '';
+  position: absolute;
+  top: -120px; right: -100px;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(10,107,255,0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.cover-inner { position: relative; z-index: 1; max-width: 740px; }
+
+.cover-from {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  padding: 6px 14px 6px 8px;
+  margin-bottom: 32px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+}
+.cover-avatar {
+  width: 24px; height: 24px;
+  background: linear-gradient(135deg, var(--snow), #6fa3ff);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cover h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.cover h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: #6fa3ff;
+}
+
+.cover-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 40px;
+  line-height: 1.5;
+  max-width: 520px;
+}
+
+
+
+/* Cover stats */
+.cover-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 520px;
+}
+.cover-stat {
+  flex: 1;
+  padding: 18px 20px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.cover-stat:last-child { border-right: none; }
+.cs-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.cs-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════
+   STICKY TOOLBAR
+══════════════════════════════════════════ */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 56px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.tb-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--snow);
+}
+
+.search-wrap {
+  position: relative;
+  flex: 0 0 240px;
+}
+.search-wrap input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 12px 8px 34px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  background: var(--bg);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-wrap input::placeholder { color: var(--ink-4); }
+.search-wrap input:focus { border-color: var(--snow); box-shadow: 0 0 0 3px rgba(10,107,255,0.1); background: #fff; }
+.si {
+  position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-4); pointer-events: none;
+}
+
+.persona-pills {
+  display: flex; gap: 6px;
+}
+.ppill {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 15px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border-2);
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ppill:hover { border-color: var(--ink-3); color: var(--ink); }
+.ppill.p-all.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* Certifications dropdown */
+.cert-wrap { position: relative; }
+.ppill.p-cert {
+  background: linear-gradient(135deg, #0a6bff, #0040c4);
+  border-color: #0a6bff;
+  color: #fff;
+  display: flex; align-items: center; gap: 5px;
+}
+.ppill.p-cert:hover { opacity: 0.9; }
+.cert-arrow { font-size: 10px; transition: transform 0.2s; }
+.cert-arrow.open { transform: rotate(180deg); }
+
+.cert-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border-2);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(13,15,20,0.14);
+  min-width: 300px;
+  z-index: 200;
+  overflow: hidden;
+  animation: dropIn 0.18s ease;
+}
+.cert-dropdown.open { display: block; }
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cert-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cert-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.cert-item:last-child { border-bottom: none; }
+.cert-item:hover { background: var(--bg); }
+
+.cert-icon { font-size: 18px; flex-shrink: 0; }
+
+.cert-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cert-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.cert-link {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--snow);
+}
+.ppill.p-de.on  { background: var(--de); border-color: var(--de); color: #fff; }
+.ppill.p-arch.on { background: var(--arch); border-color: var(--arch); color: #fff; }
+.ppill.p-cio.on { background: var(--cio); border-color: var(--cio); color: #fff; }
+
+.tb-count {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--ink-4);
+  white-space: nowrap;
+}
+.tb-count b { color: var(--ink); font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   CONTENT AREA
+══════════════════════════════════════════ */
+.content { padding: 0 56px 80px; }
+
+.sec-block { margin-bottom: 52px; }
+.sec-block.hidden { display: none; }
+
+.sec-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.sec-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.badge-de { background: var(--de-bg); color: var(--de); }
+.badge-arch { background: var(--arch-bg); color: var(--arch); }
+.badge-cio { background: var(--cio-bg); color: var(--cio); }
+.sec-count-label { font-size: 13px; color: var(--ink-4); font-weight: 400; margin-left: auto; }
+
+/* Grid */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(355px, 1fr)); gap: 16px; }
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(13,15,20,0.1);
+  border-color: var(--border-2);
+}
+.card.hidden { display: none; }
+
+.card-accent { height: 3px; }
+.acc-de { background: var(--de); }
+.acc-arch { background: var(--arch); }
+.acc-cio { background: var(--cio); }
+
+.card-body { padding: 20px 22px 16px; }
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.field { margin-bottom: 12px; }
+.f-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+}
+.f-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.card-sep { height: 1px; background: var(--border); margin: 14px 0; }
+
+.win-row {
+  display: flex; gap: 9px; align-items: flex-start;
+  background: var(--win-bg);
+  border: 1px solid var(--win-border);
+  border-radius: 8px;
+  padding: 10px 13px;
+  margin-bottom: 12px;
+}
+.win-star { color: #059669; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+.win-val { font-size: 12.5px; font-weight: 600; color: var(--win); line-height: 1.5; }
+
+.demo-row {
+  display: flex; gap: 9px; align-items: flex-start;
+  background: #f8f9fc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 13px;
+  margin: 0 22px 18px;
+}
+.demo-tag {
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-top: 1px;
+}
+.demo-val { font-size: 12.5px; color: var(--ink); line-height: 1.5; font-weight: 500; }
+
+/* ══════════════════════════════════════════
+   FOOTER — Personal signature
+══════════════════════════════════════════ */
+.footer {
+  background: var(--ink);
+  padding: 44px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-left h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.footer-left p {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  max-width: 420px;
+  line-height: 1.65;
+}
+.footer-left p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+.footer-sig {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.sig-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: #6fa3ff;
+}
+.sig-role {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Empty state */
+.empty { grid-column: 1/-1; text-align: center; padding: 60px 20px; }
+.empty h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink-3); margin-bottom: 8px; }
+.empty p { font-size: 13px; color: var(--ink-4); }
+
+/* ══ Main tabs ══ */
+.main-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.main-tab {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 7px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.main-tab:hover { color: var(--ink); background: var(--bg); }
+.main-tab.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* ══ Summary panel ══ */
+.summary-panel {
+  background: var(--bg);
+  padding: 56px 56px 72px;
+  min-height: calc(100vh - 120px);
+}
+.summary-inner {
+  max-width: 680px;
+}
+.summary-to {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.summary-to-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  background: var(--border);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.summary-to-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.summary-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+.summary-body p {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink-2);
+  line-height: 1.8;
+}
+.summary-body p strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.summary-sign {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sign-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--ink);
+}
+.sign-contact {
+  font-size: 13px;
+  color: var(--ink-4);
+  font-weight: 400;
+}
+
+.summary-cta { margin-top: 36px; }
+.cta-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 13px 28px;
+  background: var(--snow);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: 0.01em;
+}
+.cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ══ PIC controls bar (inside content) ══ */
+.pic-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 16px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+/* ══ Responsive ══ */
+@media (max-width: 680px) {
+  .cover, .toolbar, .content, .footer { padding-left: 20px; padding-right: 20px; }
+  .cover { padding-top: 40px; padding-bottom: 40px; }
+  .cards { grid-template-columns: 1fr; }
+  .cover-stats { flex-direction: column; }
+  .cover-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .toolbar { gap: 8px; }
+  .search-wrap { flex: 1 1 100%; }
+  .footer { flex-direction: column; align-items: flex-start; }
+  .footer-sig { align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<section class="cover">
+  <div class="cover-inner">
+
+    <div class="cover-from">
+      <div class="cover-avatar" id="cover-initials">DR</div>
+      <span id="cover-byline">Built by Deepak Ritti</span>
+    </div>
+
+    <h1>Snowflake <em>Problem</em><br>Identification Charts</h1>
+    <p class="cover-sub">A personal reference I built to think more deeply about customer problems.</p>
+
+    <div class="cover-stats">
+      <div class="cover-stat">
+        <div class="cs-num">24</div>
+        <div class="cs-label">Scenarios</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cs-num">3</div>
+        <div class="cs-label">Personas</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cs-num">5</div>
+        <div class="cs-label">Fields per card</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cs-num">1</div>
+        <div class="cs-label">Goal</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ TABBED TOOLBAR ══ -->
+<div class="toolbar">
+  <div class="toolbar-brand">
+    <div class="tb-dot"></div>
+    PIC Reference
+  </div>
+  <div class="main-tabs">
+    <button class="main-tab active" id="tab-summary" onclick="switchTab('summary')">📋 Summary</button>
+    <div class="cert-wrap" id="cert-wrap">
+      <button class="main-tab" id="tab-cert" onclick="toggleCerts(event)">
+        🎖 Certifications <span class="cert-arrow" id="cert-arrow">▾</span>
+      </button>
+      <div class="cert-dropdown" id="cert-dropdown">
+        <div class="cert-label">Deepak Ritti · Verified Credentials</div>
+        <a href="https://achieve.snowflake.com/b22bad9d-a07b-41a8-90f4-f8058858361a#acc.lFBwi52G" target="_blank" class="cert-item">
+          <span class="cert-icon">❄️</span>
+          <span class="cert-info">
+            <span class="cert-name">SnowPro Associate Platform Certification</span>
+            <span class="cert-link">Verify credential ↗</span>
+          </span>
+        </a>
+        <a href="https://www.datacamp.com/certificate/DEA0014126873024" target="_blank" class="cert-item">
+          <span class="cert-icon">🎓</span>
+          <span class="cert-info">
+            <span class="cert-name">Data Engineer Associate Certification</span>
+            <span class="cert-link">Verify credential ↗</span>
+          </span>
+        </a>
+        <a href="https://achieve.snowflake.com/4695adf9-3a2d-4370-9963-4e9d8daaf6ea#acc.XrOlL2qf" target="_blank" class="cert-item">
+          <span class="cert-icon">🏅</span>
+          <span class="cert-info">
+            <span class="cert-name">Data Warehousing Hands-On Badge</span>
+            <span class="cert-link">Verify credential ↗</span>
+          </span>
+        </a>
+        <a href="https://achieve.snowflake.com/fa71b02b-78c5-424a-86d7-d0563749b610#acc.6lNgamyW" target="_blank" class="cert-item">
+          <span class="cert-icon">🏅</span>
+          <span class="cert-info">
+            <span class="cert-name">Data Application Builders Hands-On Badge</span>
+            <span class="cert-link">Verify credential ↗</span>
+          </span>
+        </a>
+        <a href="https://achieve.snowflake.com/c9b0305f-f043-4288-9a8e-2fab908fc871#acc.pLS4eaiV" target="_blank" class="cert-item">
+          <span class="cert-icon">🏅</span>
+          <span class="cert-info">
+            <span class="cert-name">Data Lake Hands-On Badge</span>
+            <span class="cert-link">Verify credential ↗</span>
+          </span>
+        </a>
+        <a href="https://achieve.snowflake.com/2ec1e9a6-97ed-4850-8fd9-72c5a725f2b0#acc.seCXb8yB" target="_blank" class="cert-item">
+          <span class="cert-icon">🏅</span>
+          <span class="cert-info">
+            <span class="cert-name">Data Engineering Hands-On Badge</span>
+            <span class="cert-link">Verify credential ↗</span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <button class="main-tab" id="tab-pic" onclick="switchTab('pic')">📊 Problem Identification Charts</button>
+  </div>
+</div>
+
+<!-- ══ SUMMARY PANEL ══ -->
+<div id="panel-summary" class="summary-panel">
+  <div class="summary-inner">
+
+    <div class="summary-to">
+      <span class="summary-to-label">To</span>
+      <span class="summary-to-name">Sumeet</span>
+    </div>
+
+    <div class="summary-body">
+      <p>I hope this finds you well. I've been spending time learning the Snowflake platform and wanted to share something I put together as part of that process — a Problem Identification Chart (PIC) that I've been building to help myself think through customer conversations more clearly.</p>
+
+      <p>It attempts to map <strong>business problems</strong> to their <strong>root causes</strong>, <strong>business impact</strong>, and <strong>how Snowflake addresses them</strong>, across three personas — <strong>Data Engineer</strong>, <strong>Data / Cloud Architect</strong>, and <strong>CIO / CTO</strong> — who I understand to be common influencers and decision-makers in a typical Snowflake engagement.</p>
+
+      <p>I should mention that <strong>Snowflake Cortex and its AI/ML functions are not yet covered</strong> — I plan to add that once I've completed the hands-on Cortex training and feel I understand it well enough to represent it accurately.</p>
+
+      <p>This is very much a first draft and I'm sure there's a lot I've missed or could have framed better. I'd genuinely appreciate any corrections or guidance. My next area of focus is <strong>hands-on Machine Learning and AI training</strong>, along with working through some real datasets from Kaggle — structured, semi-structured, and unstructured — to get more practical exposure.</p>
+
+      <p>I've also included a <strong>Certifications</strong> tab for your reference.</p>
+
+      <p>Thank you again for your time and mentorship — it means a lot. I look forward to your feedback and instructions.</p>
+
+      <div class="summary-sign">
+        <div class="sign-name">Deepak Ritti</div>
+        <div class="sign-contact">+91 7045 240 635</div>
+      </div>
+    </div>
+
+    <div class="summary-cta">
+      <button class="cta-btn" onclick="switchTab('pic')">View Problem Identification Charts →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ PIC CONTENT ══ -->
+<div class="content" id="content" style="display:none;">
+  <div class="pic-controls">
+    <div class="search-wrap">
+      <span class="si">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/><path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <input type="text" id="q" placeholder="Search any keyword…" oninput="run()">
+    </div>
+    <div class="persona-pills">
+      <button class="ppill p-de" data-p="de" onclick="setP(this)">Data Engineer</button>
+      <button class="ppill p-arch" data-p="arch" onclick="setP(this)">Architect</button>
+      <button class="ppill p-cio" data-p="cio" onclick="setP(this)">CIO / CTO</button>
+      <button class="ppill p-showall" id="btn-showall" onclick="showAll()" style="display:none">✕ Show all</button>
+    </div>
+    <div class="tb-count">Showing <b id="vc">24</b> of <b>24</b></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-left">
+    <h3>Snowflake PIC Reference</h3>
+    <p>A structured discovery reference mapping customer pain to root cause, Snowflake's competitive position, and the right demo — across every key buyer persona.</p>
+  </div>
+  <div class="footer-sig">
+    <div class="sig-name">Deepak Ritti</div>
+    <div class="sig-role">+91 7045 240 635</div>
+  </div>
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────
+const PIC = [
+  { p:"de", problem:"Pipelines frequently fail and need manual fixes",
+    impact:"Engineers spend time fixing issues instead of building new pipelines; data arrives late to business teams.",
+    cause:"Too many moving parts — different tools stitched together mean one failure cascades through the whole flow.",
+    win:"Snowflake reduces dependency on multiple tools and automates ingestion and processing end-to-end.",
+    demo:"Snowpipe auto-ingestion + Task scheduling — no manual trigger needed" },
+
+  { p:"de", problem:"Incremental data loads are difficult to manage",
+    impact:"Reports show incorrect or duplicate data; teams lose trust in dashboards.",
+    cause:"No simple way to track what's changed — engineers rely on fragile custom logic.",
+    win:"Built-in change tracking via Streams eliminates complex custom CDC logic.",
+    demo:"Streams tracking changes + Task applying incremental updates" },
+
+  { p:"de", problem:"Scaling pipelines is unpredictable",
+    impact:"Jobs run slowly at peak time, or costs spike from over-provisioning.",
+    cause:"Infrastructure must be sized in advance and can't respond to workload changes.",
+    win:"Compute scales automatically on demand — zero manual intervention.",
+    demo:"Live warehouse auto-scaling during concurrent query load" },
+
+  { p:"de", problem:"Handling JSON and log data is slow and complex",
+    impact:"Engineers burn time transforming data before it can be analysed.",
+    cause:"Traditional systems require structured data, so every new source needs a pre-processing step.",
+    win:"Snowflake allows direct querying of semi-structured data without heavy preprocessing.",
+    demo:"Load raw JSON → query it immediately, no schema changes" },
+
+  { p:"de", problem:"Too many tools to manage pipelines",
+    impact:"High maintenance burden; steep onboarding for every new team member.",
+    cause:"Separate tools for ingestion, processing, and storage — each adds ops overhead.",
+    win:"Snowflake consolidates ingestion, transformation, and storage in one platform.",
+    demo:"End-to-end pipeline built entirely inside Snowflake" },
+
+  { p:"de", problem:"Reprocessing historical data is risky",
+    impact:"Re-running jobs can disrupt production workloads or take painfully long.",
+    cause:"Historical and current workloads share the same compute infrastructure.",
+    win:"Separate virtual warehouses let you reprocess safely without any production impact.",
+    demo:"Full historical backfill on an isolated warehouse — production untouched" },
+
+  { p:"de", problem:"No easy way to recover from data mistakes",
+    impact:"Errors permanently affect reports; remediation requires manual work across systems.",
+    cause:"No native mechanism to roll back to a prior version of the data.",
+    win:"Time Travel enables instant rollback to any point in the past — no restore jobs.",
+    demo:"Restore a table to its exact state from 24 hours ago, in seconds" },
+
+  { p:"de", problem:"Managing dev / test / prod environments is time-consuming",
+    impact:"Slow dev cycles; deployment errors frequently make it to production.",
+    cause:"Environments have to be rebuilt manually with full data copies each time.",
+    win:"Zero-copy cloning creates complete environment mirrors without duplicating storage.",
+    demo:"Clone an entire production database in seconds, at no extra storage cost" },
+
+  { p:"arch", problem:"Data is spread across multiple systems",
+    impact:"No unified view; integration work consumes weeks of engineering time.",
+    cause:"Separate tools for storage, processing, and analytics create deep, expensive silos.",
+    win:"Snowflake is a single platform for every data workload — no stitching required.",
+    demo:"Ingest → transform → query in a single, unbroken Snowflake flow" },
+
+  { p:"arch", problem:"System slows down with more concurrent users",
+    impact:"Business users hit delays; teams compete for the same compute bucket.",
+    cause:"Shared infrastructure can't serve multiple workloads efficiently at the same time.",
+    win:"Virtual warehouses isolate workloads — one team's heavy query never impacts another.",
+    demo:"Multiple heavy queries running simultaneously, zero interference" },
+
+  { p:"arch", problem:"Enforcing data access rules is difficult",
+    impact:"Unauthorized access risk, shadow sharing, and compliance exposure.",
+    cause:"Access control is implemented inconsistently across different systems.",
+    win:"Centralized RBAC and dynamic data masking apply uniformly across all data.",
+    demo:"Role-based access + dynamic masking applied across an entire platform" },
+
+  { p:"arch", problem:"Sharing data across teams is inefficient",
+    impact:"Duplication inflates costs and teams end up working from stale copies.",
+    cause:"Data must be physically copied to be accessible to another team or system.",
+    win:"Snowflake's Secure Data Sharing shares live data with zero copying.",
+    demo:"Live dataset shared between two accounts — no pipelines, no duplication" },
+
+  { p:"arch", problem:"Supporting different use cases requires multiple tools",
+    impact:"Platform complexity multiplies cost and makes hiring harder.",
+    cause:"Each workload — ETL, BI, streaming, AI — needs its own specialized tool.",
+    win:"Snowflake handles all workloads natively in one unified system.",
+    demo:"ETL pipeline + BI query + ML model inference — all inside Snowflake" },
+
+  { p:"arch", problem:"Performance depends on constant manual tuning",
+    impact:"Requires deep specialist skills and ongoing effort just to maintain baseline speed.",
+    cause:"Traditional systems need indexes, partitions, and vacuums managed by hand.",
+    win:"Snowflake auto-optimises — query planning, clustering, and pruning are automatic.",
+    demo:"Run complex untuned queries — no indexes, no hints, full performance" },
+
+  { p:"arch", problem:"Disaster recovery is complex to implement",
+    impact:"Significant downtime and data loss risk during any regional failure.",
+    cause:"Recovery procedures are manual, poorly documented, and tested rarely.",
+    win:"Built-in cross-region replication and automated failover make DR a config setting.",
+    demo:"Walk through replication setup and failover — minutes, not months" },
+
+  { p:"arch", problem:"Cloud strategy becomes restrictive",
+    impact:"Architectural decisions made today limit options years from now.",
+    cause:"Deep dependence on a single cloud provider locks in proprietary services.",
+    win:"Snowflake runs natively on AWS, Azure, and GCP — no refactoring required.",
+    demo:"Explain cross-cloud deployment and live data replication between providers" },
+
+  { p:"cio", problem:"High overall cost of the data platform",
+    impact:"Budget pressure mounts; ROI is difficult to justify to the board.",
+    cause:"Multiple tools, redundant infrastructure, and multiple teams to manage all of it.",
+    win:"Consolidation onto one platform eliminates duplicated operational overhead.",
+    demo:"Usage-based pricing + auto-suspend: show exactly how spend is governed" },
+
+  { p:"cio", problem:"Slow access to insights",
+    impact:"Decisions are delayed — resulting in direct revenue and market opportunity loss.",
+    cause:"Data pipelines are slow and every ad-hoc question needs an engineering ticket.",
+    win:"Self-service access and instant scaling put answers in business users' hands directly.",
+    demo:"Sub-second query on a billion-row table + instant scale-up on demand" },
+
+  { p:"cio", problem:"Data is siloed across departments",
+    impact:"Different teams report different numbers; executive confidence in data collapses.",
+    cause:"Data lives in separate systems with no standardised access or sharing model.",
+    win:"One unified platform means every team accesses the same authoritative source.",
+    demo:"Cross-department data sharing with no pipeline changes required" },
+
+  { p:"cio", problem:"Difficulty adopting AI and ML",
+    impact:"Innovation velocity slows as competitors move faster on AI-enabled products.",
+    cause:"Data is inaccessible or unprepared for AI — too many manual prep steps in the way.",
+    win:"Snowflake Cortex brings AI and data together without moving a single byte.",
+    demo:"Cortex AI function called directly on a Snowflake table — no export, no pipeline" },
+
+  { p:"cio", problem:"Governance and compliance challenges",
+    impact:"Regulatory exposure, audit failures, and data breach liability.",
+    cause:"No centralised visibility or consistent enforcement across who accesses what data.",
+    win:"Built-in governance — masking, lineage, and access policies — applied platform-wide.",
+    demo:"Dynamic masking + access policies enforced across every data asset at once" },
+
+  { p:"cio", problem:"Vendor lock-in concerns",
+    impact:"Strategic rigidity and weakened negotiating position with technology vendors.",
+    cause:"Proprietary stacks create switching costs that compound over years.",
+    win:"Multi-cloud portability means Snowflake strengthens your leverage, not a vendor's.",
+    demo:"Walk through deployment flexibility and cross-cloud replication options" },
+
+  { p:"cio", problem:"Slow onboarding of new teams or projects",
+    impact:"Business initiatives stall while waiting on infrastructure provisioning cycles.",
+    cause:"Environment setup requires weeks of coordination across infrastructure teams.",
+    win:"No infrastructure management needed — Snowflake environments provision instantly.",
+    demo:"New environment provisioned and querying production data in under 5 minutes" },
+
+  { p:"cio", problem:"Lack of near real-time data",
+    impact:"Decisions are made on data that is hours or days stale.",
+    cause:"Batch ingestion creates unavoidable and growing latency in data availability.",
+    win:"Continuous ingestion via Snowpipe delivers near real-time data availability.",
+    demo:"File lands in object storage → queryable in Snowflake within seconds" },
+];
+
+const SECS = [
+  { id:"de",   label:"Data Engineer",          badge:"badge-de",   acc:"acc-de" },
+  { id:"arch", label:"Data / Cloud Architect",  badge:"badge-arch", acc:"acc-arch" },
+  { id:"cio",  label:"CIO / CTO",              badge:"badge-cio",  acc:"acc-cio" },
+];
+
+let ap = "all";
+
+function build() {
+  const c = document.getElementById("content");
+  // Remove any previously built section blocks
+  c.querySelectorAll(".sec-block").forEach(el => el.remove());
+
+  SECS.forEach(s => {
+    const block = document.createElement("div");
+    block.className = "sec-block";
+    block.dataset.sec = s.id;
+    block.innerHTML = `
+      <div class="sec-header">
+        <div class="sec-title">${s.label}</div>
+        <span class="sec-badge ${s.badge}" id="sb-${s.id}"></span>
+        <span class="sec-count-label" id="sl-${s.id}"></span>
+      </div>
+      <div class="cards" id="cards-${s.id}"></div>
+    `;
+    c.appendChild(block);
+  });
+
+  PIC.forEach((item, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.persona = item.p;
+    card.dataset.search = [item.problem, item.impact, item.cause, item.win, item.demo].join(" ").toLowerCase();
+    const s = SECS.find(x => x.id === item.p);
+    card.innerHTML = `
+      <div class="card-accent ${s.acc}"></div>
+      <div class="card-body">
+        <div class="card-title">${item.problem}</div>
+        <div class="field">
+          <div class="f-label">Business Impact</div>
+          <div class="f-val">${item.impact}</div>
+        </div>
+        <div class="card-sep"></div>
+        <div class="field">
+          <div class="f-label">Root Cause</div>
+          <div class="f-val">${item.cause}</div>
+        </div>
+        <div class="card-sep"></div>
+        <div class="win-row">
+          <div class="win-star">✦</div>
+          <div class="win-val">${item.win}</div>
+        </div>
+      </div>
+      <div class="demo-row">
+        <div class="demo-tag">Demo</div>
+        <div class="demo-val">${item.demo}</div>
+      </div>
+    `;
+    document.getElementById(`cards-${item.p}`).appendChild(card);
+  });
+}
+
+function run() {
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const cards = document.querySelectorAll(".card");
+  let vis = 0;
+  const sc = { de:0, arch:0, cio:0 };
+
+  cards.forEach(c => {
+    const pm = ap === "all" || c.dataset.persona === ap;
+    const qm = !q || c.dataset.search.includes(q);
+    const show = pm && qm;
+    c.classList.toggle("hidden", !show);
+    if (show) { vis++; sc[c.dataset.persona]++; }
+  });
+
+  SECS.forEach(s => {
+    const block = document.querySelector(`.sec-block[data-sec="${s.id}"]`);
+    const show = (ap === "all" || ap === s.id) && sc[s.id] > 0;
+    block.classList.toggle("hidden", !show);
+    const sbadge = document.getElementById(`sb-${s.id}`);
+    sbadge.textContent = s.label.split(" ")[0] === "CIO" ? "CIO / CTO" : s.label.split(" ")[0];
+    document.getElementById(`sl-${s.id}`).textContent = `${sc[s.id]} scenario${sc[s.id]!==1?"s":""}`;
+
+    // empty state
+    const grid = document.getElementById(`cards-${s.id}`);
+    const existing = grid.querySelector(".empty");
+    if (existing) existing.remove();
+    if (show && sc[s.id] === 0) {
+      grid.innerHTML = `<div class="empty"><h3>No matches</h3><p>Try a different keyword</p></div>`;
+    }
+  });
+
+  document.getElementById("vc").textContent = vis;
+}
+
+function switchTab(tab) {
+  const summaryPanel = document.getElementById("panel-summary");
+  const picPanel = document.getElementById("content");
+  const tabSummary = document.getElementById("tab-summary");
+  const tabPic = document.getElementById("tab-pic");
+
+  if (tab === "summary") {
+    summaryPanel.style.display = "";
+    picPanel.style.display = "none";
+    tabSummary.classList.add("active");
+    tabPic.classList.remove("active");
+  } else {
+    summaryPanel.style.display = "none";
+    picPanel.style.display = "";
+    tabPic.classList.add("active");
+    tabSummary.classList.remove("active");
+  }
+}
+
+function toggleCerts(e) {
+  e.stopPropagation();
+  const dd = document.getElementById("cert-dropdown");
+  const arrow = document.getElementById("cert-arrow");
+  dd.classList.toggle("open");
+  arrow.classList.toggle("open");
+}
+document.addEventListener("click", () => {
+  document.getElementById("cert-dropdown").classList.remove("open");
+  document.getElementById("cert-arrow").classList.remove("open");
+});
+
+
+function setP(btn) {
+  ap = btn.dataset.p;
+  document.querySelectorAll(".ppill[data-p]").forEach(b => b.classList.remove("on"));
+  btn.classList.add("on");
+  document.getElementById("btn-showall").style.display = "inline-flex";
+  run();
+}
+
+function showAll() {
+  ap = "all";
+  document.querySelectorAll(".ppill[data-p]").forEach(b => b.classList.remove("on"));
+  document.getElementById("btn-showall").style.display = "none";
+  run();
+}
+
+build();
+run();
+</script>
+</body>
+</html>
