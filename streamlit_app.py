@@ -6,4 +6,4 @@ st.set_page_config(layout="wide")
 with open("snowflake_pic.html", "r", encoding="utf-8") as f:
     html_content = f.read()
 
-components.html(html_content, height=2000, scrolling=True)
+components.html(html_content, height=1200, scrolling=True)
