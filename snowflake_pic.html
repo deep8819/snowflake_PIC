@@ -3,130 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snowflake PIC · Built by Deepak Ritti</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Snowflake PIC</title>
 
 <style>
-/* (UNCHANGED CSS — kept exactly as is) */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-/* ... ALL YOUR ORIGINAL CSS REMAINS EXACTLY SAME ... */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f5f8;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+.toolbar {
+  margin: 20px 0;
+}
+
+input {
+  padding: 8px;
+  width: 250px;
+}
+
+button {
+  padding: 6px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ══ COVER ══ -->
-<section class="cover">
-  <div class="cover-inner">
+<h1>Snowflake Problem Identification Charts</h1>
 
-    <div class="cover-from">
-      <div class="cover-avatar" id="cover-initials">DR</div>
-      <span id="cover-byline">Built by Deepak Ritti</span>
-    </div>
-
-    <h1>Snowflake <em>Problem</em><br>Identification Charts</h1>
-    <p class="cover-sub">A personal reference I built to think more deeply about customer problems.</p>
-
-    <div class="cover-stats">
-      <div class="cover-stat"><div class="cs-num">24</div><div class="cs-label">Scenarios</div></div>
-      <div class="cover-stat"><div class="cs-num">3</div><div class="cs-label">Personas</div></div>
-      <div class="cover-stat"><div class="cs-num">5</div><div class="cs-label">Fields per card</div></div>
-      <div class="cover-stat"><div class="cs-num">1</div><div class="cs-label">Goal</div></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══ TOOLBAR (SUMMARY REMOVED) ══ -->
 <div class="toolbar">
-  <div class="toolbar-brand">
-    <div class="tb-dot"></div>
-    PIC Reference
-  </div>
-
-  <div class="main-tabs">
-    <div class="cert-wrap" id="cert-wrap">
-      <button class="main-tab" id="tab-cert" onclick="toggleCerts(event)">
-        🎖 Certifications <span class="cert-arrow" id="cert-arrow">▾</span>
-      </button>
-
-      <div class="cert-dropdown" id="cert-dropdown">
-        <div class="cert-label">Deepak Ritti · Verified Credentials</div>
-
-        <a href="https://achieve.snowflake.com/b22bad9d-a07b-41a8-90f4-f8058858361a#acc.lFBwi52G" target="_blank" class="cert-item">
-          <span class="cert-icon">❄️</span>
-          <span class="cert-info">
-            <span class="cert-name">SnowPro Associate Platform Certification</span>
-            <span class="cert-link">Verify credential ↗</span>
-          </span>
-        </a>
-
-        <a href="https://www.datacamp.com/certificate/DEA0014126873024" target="_blank" class="cert-item">
-          <span class="cert-icon">🎓</span>
-          <span class="cert-info">
-            <span class="cert-name">Data Engineer Associate Certification</span>
-            <span class="cert-link">Verify credential ↗</span>
-          </span>
-        </a>
-
-        <!-- (rest unchanged) -->
-      </div>
-    </div>
-
-    <button class="main-tab active" id="tab-pic" onclick="switchTab('pic')">
-      📊 Problem Identification Charts
-    </button>
-  </div>
+  <input type="text" id="search" placeholder="Search..." oninput="filterCards()">
+  <br><br>
+  <button onclick="setFilter('all')">All</button>
+  <button onclick="setFilter('de')">Data Engineer</button>
+  <button onclick="setFilter('arch')">Architect</button>
+  <button onclick="setFilter('cio')">CIO / CTO</button>
 </div>
 
-<!-- ══ PIC CONTENT (VISIBLE BY DEFAULT) ══ -->
-<div class="content" id="content">
-  <div class="pic-controls">
-
-    <div class="search-wrap">
-      <input type="text" id="q" placeholder="Search any keyword…" oninput="run()">
-    </div>
-
-    <div class="persona-pills">
-      <button class="ppill p-de" data-p="de" onclick="setP(this)">Data Engineer</button>
-      <button class="ppill p-arch" data-p="arch" onclick="setP(this)">Architect</button>
-      <button class="ppill p-cio" data-p="cio" onclick="setP(this)">CIO / CTO</button>
-      <button class="ppill p-showall" id="btn-showall" onclick="showAll()" style="display:none">✕ Show all</button>
-    </div>
-
-    <div class="tb-count">Showing <b id="vc">24</b> of <b>24</b></div>
-  </div>
-</div>
-
-<!-- ══ FOOTER ══ -->
-<footer class="footer">
-  <div class="footer-left">
-    <h3>Snowflake PIC Reference</h3>
-    <p>A structured discovery reference mapping customer pain to root cause, Snowflake's competitive position, and the right demo — across every key buyer persona.</p>
-  </div>
-  <div class="footer-sig">
-    <div class="sig-name">Deepak Ritti</div>
-    <div class="sig-role">+91 7045 240 635</div>
-  </div>
-</footer>
+<div id="cards"></div>
 
 <script>
+const data = [
+  {p:"de", problem:"Pipelines frequently fail"},
+  {p:"de", problem:"Incremental loads are hard"},
+  {p:"arch", problem:"Data is spread across systems"},
+  {p:"cio", problem:"High platform cost"}
+];
 
-/* (DATA + LOGIC FULLY UNCHANGED EXCEPT switchTab) */
+let active = "all";
 
-function switchTab(tab) {
-  const picPanel = document.getElementById("content");
-  const tabPic = document.getElementById("tab-pic");
+function build() {
+  const container = document.getElementById("cards");
+  container.innerHTML = "";
 
-  picPanel.style.display = "";
-  tabPic.classList.add("active");
+  data.forEach(d => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.dataset.p = d.p;
+    div.textContent = d.problem;
+    container.appendChild(div);
+  });
 }
 
-/* ALL OTHER JS EXACTLY SAME (build, run, filters etc.) */
+function setFilter(p) {
+  active = p;
+  filterCards();
+}
+
+function filterCards() {
+  const q = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(c => {
+    const matchFilter = active === "all" || c.dataset.p === active;
+    const matchSearch = c.textContent.toLowerCase().includes(q);
+    c.style.display = (matchFilter && matchSearch) ? "" : "none";
+  });
+}
 
 build();
-run();
-
 </script>
 
 </body>
